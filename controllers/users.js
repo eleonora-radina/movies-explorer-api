@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET_DEV } = require('../utils/config');
 
 const User = require('../models/user');
 
@@ -56,10 +57,10 @@ const login = async (req, res, next) => {
       return next(new UnauthorizedError(invalidCredentialsErrorMessage));
     }
 
-    const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret', { expiresIn: 3600 });
+    const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV, { expiresIn: 3600 });
     res.cookie('jwt', token, { httpOnly: true, sameSite: true });
 
-    return res.send(user.toJSON());
+    return res.send(token);
   } catch (e) {
     if (e.name === validationErrorName) {
       return next(new BadRequestError(badRequestErrorMessage));
@@ -100,6 +101,9 @@ const editUseInfo = async (req, res, next) => {
     }
     return res.send(userEdited);
   } catch (e) {
+    if (e.code === 11000) {
+      return next(new ConflictError(conflictErrorMessage));
+    }
     if (e.name === validationErrorName) {
       return next(new BadRequestError(badRequestErrorMessage));
     } return next(new InternalServerError(internalServerErrorMessage));

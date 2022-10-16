@@ -10,12 +10,13 @@ const errorHandler = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./middlewares/rateLimit');
 
-const router = require('./routes/index');
+const router = require('./routes');
 
 const { NODE_ENV, MONGO, PORT = 3000 } = process.env;
+const { MONGO_DEV } = require('./utils/config');
 
 const app = express();
-mongoose.connect(NODE_ENV === 'production' ? MONGO : 'mongodb://127.0.0.1:27017/moviesdb');
+mongoose.connect(NODE_ENV === 'production' ? MONGO : MONGO_DEV);
 
 /* app.use(cors({
   origin: ['http://localhost:3000', 'http://noradina.nomoredomains.icu', 'https://noradina.nomoredomains.icu'],
@@ -24,12 +25,12 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO : 'mongodb://127.0.0.1:27017/
 */
 
 app.use(helmet());
-app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use(requestLogger);
+app.use(limiter);
+
 app.use('/', router);
 
 app.use(errorLogger);
