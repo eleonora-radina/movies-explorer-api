@@ -60,7 +60,7 @@ const login = async (req, res, next) => {
     const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV, { expiresIn: 3600 });
     res.cookie('jwt', token, { httpOnly: true, sameSite: true });
 
-    return res.send(token);
+    return res.send(user);
   } catch (e) {
     if (e.name === validationErrorName) {
       return next(new BadRequestError(badRequestErrorMessage));
