@@ -9,6 +9,7 @@ const invalidCredentialsErrorMessage = 'Неправильные почта ил
 const conflictErrorMessage = 'Данный email уже существует.';
 const notFoundUserErrorMessage = 'Пользователь по указанному _id не найден.';
 const notFoundErrorMessage = 'Страница не найдена';
+const notFoundFilmsErrorMessage = 'Сохраненные фильмы не найдены.';
 
 const logoutMessage = 'Вы вышли из профиля';
 
@@ -33,4 +34,5 @@ module.exports = {
   invalidUrlMessage,
   invalidEmailMessage,
   notFoundErrorMessage,
+  notFoundFilmsErrorMessage,
 };

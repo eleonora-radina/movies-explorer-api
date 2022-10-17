@@ -11,6 +11,7 @@ const {
   forbiddenFilmErrorMessage,
   validationErrorName,
   castErrorName,
+  notFoundFilmsErrorMessage,
 } = require('../utils/constants');
 
 const createMovie = async (req, res, next) => {
@@ -26,7 +27,10 @@ const createMovie = async (req, res, next) => {
 
 const getMovies = async (req, res, next) => {
   try {
-    const movies = await Movie.find({});
+    const movies = await Movie.find({ owner: req.user._id });
+    if (!movies.toString()) {
+      return next(new NotFoundError(notFoundFilmsErrorMessage));
+    }
     return res.send(movies);
   } catch (e) {
     return next(new InternalServerError(internalServerErrorMessage));
