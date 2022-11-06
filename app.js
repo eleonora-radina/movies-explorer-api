@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-// const cors = require('cors');
+const cors = require('cors');
 const helmet = require('helmet');
 const errorHandler = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -18,11 +18,10 @@ const { MONGO_DEV } = require('./utils/config');
 const app = express();
 mongoose.connect(NODE_ENV === 'production' ? MONGO : MONGO_DEV);
 
-/* app.use(cors({
-  origin: ['http://localhost:3000', 'http://noradina.nomoredomains.icu', 'https://noradina.nomoredomains.icu'],
+app.use(cors({
+  origin: ['http://localhost:3000'],
   credentials: true,
 }));
-*/
 
 app.use(helmet());
 app.use(bodyParser.json());
