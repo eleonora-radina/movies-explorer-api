@@ -69,7 +69,7 @@ const login = async (req, res, next) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie('jwt').send({ message: logoutMessage });
+  res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true }).send({ message: logoutMessage });
 };
 
 const getUserInfo = async (req, res, next) => {
