@@ -13,7 +13,7 @@ router.post('/signin', signInValidation, login);
 
 router.use(auth);
 
-router.get('/signout', logout);
+router.post('/signout', logout);
 
 router.use('/users', require('./users'));
 router.use('/movies', require('./movies'));
