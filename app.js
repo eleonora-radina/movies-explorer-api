@@ -19,7 +19,7 @@ const app = express();
 mongoose.connect(NODE_ENV === 'production' ? MONGO : MONGO_DEV);
 
 app.use(cors({
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000', 'https://noradina.movie.nomoredomains.icu', 'http://noradina.movie.nomoredomains.icu'],
   credentials: true,
 }));
 
