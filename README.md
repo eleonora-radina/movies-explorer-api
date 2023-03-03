@@ -12,5 +12,5 @@ https://api.noradina.movie.nomoredomains.icu/
 
 Для локального запуска нужно:
 1. Перейти в папку "movies-explorer-api-main"
-Установить необходимые пакеты - npm install
-Запустить проект - npm start
+2. Установить необходимые пакеты - npm install
+3. Запустить проект - npm start
